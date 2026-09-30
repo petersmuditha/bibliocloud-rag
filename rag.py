@@ -5,9 +5,8 @@ from langchain_classic.chains import RetrievalQA
 from langchain_community.retrievers import BM25Retriever
 from langchain_classic.retrievers import EnsembleRetriever
 from langchain_groq import ChatGroq
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_community.embeddings import CohereEmbeddings
 import os
-
 
 def create_qa_chain():
     """Create and return the RAG chain with hybrid search."""
@@ -28,11 +27,11 @@ def create_qa_chain():
     chunks = splitter.split_documents(documents)
     print(f"Created {len(chunks)} chunks")
 
-    # 3. EMBEDDING (via Hugging Face Inference API - no torch on server)
-    embeddings = HuggingFaceInferenceAPIEmbeddings(
-    api_key=os.environ.get("HF_API_KEY"),
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+    # 3. EMBEDDING (via Cohere - stable on Render)
+    embeddings = CohereEmbeddings(
+        model="embed-english-light-v3.0", # Modello leggero e gratuito
+        cohere_api_key=os.environ.get("COHERE_API_KEY")
+    )
 
     # 4. VECTOR STORE
     vector_store = FAISS.from_documents(chunks, embeddings)
@@ -64,20 +63,5 @@ def create_qa_chain():
 
     return qa_chain
 
-
 if __name__ == "__main__":
-    qa_chain = create_qa_chain()
-    questions = [
-        "How many books can a student borrow?",
-        "What is the fine for late returns?",
-        "What are the opening hours on Saturday?",
-        "Can I renew a reserved book?",
-        "What is the phone number of the library?"
-    ]
-    for question in questions:
-        print(f"\n{'='*60}\nQUESTION: {question}\n{'='*60}")
-        result = qa_chain.invoke({"query": question})
-        print(f"ANSWER: {result['result']}")
-        print(f"\nSOURCES:")
-        for doc in result['source_documents']:
-            print(f"  - {doc.metadata.get('source', 'unknown')}")
+    # ... (il resto del codice rimane uguale)
