@@ -1,15 +1,16 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_classic.chains import RetrievalQA
 from langchain_community.retrievers import BM25Retriever
 from langchain_classic.retrievers import EnsembleRetriever
 from langchain_groq import ChatGroq
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 import os
 
+
 def create_qa_chain():
-    """Create and return the RAG chain with hybrid search (vector + BM25)."""
+    """Create and return the RAG chain with hybrid search."""
 
     # 1. LOADING DOCUMENTS
     loader1 = TextLoader('data/loans.txt', encoding='utf-8')
@@ -27,8 +28,9 @@ def create_qa_chain():
     chunks = splitter.split_documents(documents)
     print(f"Created {len(chunks)} chunks")
 
-    # 3. EMBEDDING
-    embeddings = HuggingFaceEmbeddings(
+    # 3. EMBEDDING (via Hugging Face Inference API - no torch on server)
+    embeddings = HuggingFaceInferenceAPIEmbeddings(
+        api_key=os.environ.get("HF_API_KEY"),
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
@@ -45,7 +47,7 @@ def create_qa_chain():
         weights=[0.5, 0.5]
     )
 
-    # 6. LLM (Groq instead of Ollama)
+    # 6. LLM (Groq)
     llm = ChatGroq(
         model="openai/gpt-oss-20b",
         temperature=0.1,
