@@ -30,9 +30,9 @@ def create_qa_chain():
 
     # 3. EMBEDDING (via Hugging Face Inference API - no torch on server)
     embeddings = HuggingFaceInferenceAPIEmbeddings(
-        api_key=os.environ.get("HF_API_KEY"),
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
+    api_key=os.environ.get("HF_API_KEY"),
+    model_name="BAAI/bge-small-en-v1.5"
+)
 
     # 4. VECTOR STORE
     vector_store = FAISS.from_documents(chunks, embeddings)
