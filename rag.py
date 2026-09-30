@@ -8,6 +8,7 @@ from langchain_groq import ChatGroq
 from langchain_community.embeddings import CohereEmbeddings
 import os
 
+
 def create_qa_chain():
     """Create and return the RAG chain with hybrid search."""
 
@@ -27,9 +28,9 @@ def create_qa_chain():
     chunks = splitter.split_documents(documents)
     print(f"Created {len(chunks)} chunks")
 
-    # 3. EMBEDDING (via Cohere - stable on Render)
+    # 3. EMBEDDING (via Cohere)
     embeddings = CohereEmbeddings(
-        model="embed-english-light-v3.0", # Modello leggero e gratuito
+        model="embed-english-light-v3.0",
         cohere_api_key=os.environ.get("COHERE_API_KEY")
     )
 
@@ -63,5 +64,20 @@ def create_qa_chain():
 
     return qa_chain
 
+
 if __name__ == "__main__":
-    # ... (il resto del codice rimane uguale)
+    qa_chain = create_qa_chain()
+    questions = [
+        "How many books can a student borrow?",
+        "What is the fine for late returns?",
+        "What are the opening hours on Saturday?",
+        "Can I renew a reserved book?",
+        "What is the phone number of the library?"
+    ]
+    for question in questions:
+        print(f"\n{'='*60}\nQUESTION: {question}\n{'='*60}")
+        result = qa_chain.invoke({"query": question})
+        print(f"ANSWER: {result['result']}")
+        print(f"\nSOURCES:")
+        for doc in result['source_documents']:
+            print(f"  - {doc.metadata.get('source', 'unknown')}")
