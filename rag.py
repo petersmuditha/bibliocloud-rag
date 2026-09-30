@@ -5,7 +5,7 @@ from langchain_classic.chains import RetrievalQA
 from langchain_community.retrievers import BM25Retriever
 from langchain_classic.retrievers import EnsembleRetriever
 from langchain_groq import ChatGroq
-from langchain_community.embeddings import CohereEmbeddings
+from langchain_cohere import CohereEmbeddings
 import os
 
 
