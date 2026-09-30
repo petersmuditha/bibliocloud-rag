@@ -1,0 +1,24 @@
+@"
+BIBLIOTECLOUD - LOAN RULES
+Regulations for book loans
+
+LOAN DURATION
+Students: 30 days for standard books, 7 days for reserved books.
+Professors: 60 days for standard books, 14 days for reserved books.
+External users: 15 days for standard books, no reserved books allowed.
+
+LOAN LIMITS
+Students: maximum 5 books at a time.
+Professors: maximum 10 books at a time.
+External users: maximum 2 books at a time.
+
+RENEWALS
+Each loan can be renewed twice, for 15 additional days each time.
+Renewals must be requested before the due date.
+Reserved books cannot be renewed.
+
+LATE RETURNS
+Fine: 1 euro per day per book.
+After 30 days late, the user account is suspended for 60 days.
+After 60 days late, the user must pay the full book price.
+"@ | Out-File -FilePath "data\loans.txt" -Encoding utf8

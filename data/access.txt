@@ -1,0 +1,24 @@
+@"
+BIBLIOTECLOUD - ACCESS RULES
+Regulations for accessing the library
+
+OPENING HOURS
+Monday to Friday: 8:00 to 20:00.
+Saturday: 9:00 to 18:00.
+Sunday: closed.
+
+EXAM PERIOD
+During exam periods (January, June, September): open until 23:00.
+During exam periods, Saturdays: 9:00 to 22:00.
+
+STUDY ROOMS
+Booking required for group study rooms.
+Booking can be made online up to 7 days in advance.
+Maximum 4 hours per booking.
+No food allowed in study rooms. Drinks with lids are allowed.
+
+QUIET AREAS
+Silence required in reading rooms.
+Phone calls must be taken outside.
+Headphones required for audio.
+"@ | Out-File -FilePath "data\access.txt" -Encoding utf8

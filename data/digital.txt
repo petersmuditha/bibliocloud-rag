@@ -1,0 +1,25 @@
+@"
+BIBLIOTECLOUD - DIGITAL RESOURCES RULES
+Regulations for digital resources
+
+EBOOKS
+Access requires university credentials.
+Download available for 14 days.
+Maximum 3 ebooks borrowed at a time.
+Ebooks are automatically returned after 14 days.
+
+DATABASES
+Access to academic databases (JSTOR, Scopus, Web of Science).
+Available only from university network or VPN.
+No download limits, but fair use policy applies.
+Maximum 100 articles per month per user.
+
+DIGITAL LOANS
+Digital loans follow the same rules as physical loans.
+Fines for late digital returns: 0.50 euro per day.
+Digital loans can be renewed once for 7 days.
+
+TECHNICAL SUPPORT
+For access issues, contact support@bibliocloud.edu.
+Response time: 24 hours on working days.
+"@ | Out-File -FilePath "data\digital.txt" -Encoding utf8
